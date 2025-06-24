@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi.app | HomeLink - Pre-Access</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- FUENTES: Inter para UI, Montserrat para Títulos Destacados -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-primary: #8b5cf6; --color-secondary: #4f46e5; --color-glow: rgba(167, 139, 250, 0.5);
+            --font-ui: 'Inter', sans-serif;
+            --font-display: 'Montserrat', sans-serif;
+        }
+        body { font-family: var(--font-ui); background-color: #000; color: #f0f0f0; overflow: hidden; }
+        #background-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: url('background.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 3s ease-in-out;
+        }
+        /* CAMBIO: Mayor transparencia para efecto "vidrio esmerilado" */
+        .glassmorphism {
+            position: relative;
+            background: rgba(10, 5, 20, 0.25); /* Más transparente */
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+        /* CAMBIO: Pulso de luz más sutil */
+        .glassmorphism::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(139, 92, 246, 0) 70%);
+            transform: translate(-50%, -50%);
+            animation: background-pulse 8s infinite ease-in-out;
+            z-index: -1;
+        }
+        @keyframes background-pulse { 0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.2); } }
+        
+        #intro-sequence {
+            position: fixed; inset: 0; background-color: #000; z-index: 100;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 1.5s ease-out;
+        }
+        .intro-scene { position: absolute; opacity: 0; transition: opacity 1.5s ease-in-out; text-align: center; }
+        .cinematic-text { font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; }
+
+        @keyframes fillBar { from { width: 0%; } to { width: 100%; } }
+
+        #main-content { opacity: 0; transition: opacity 2s ease-in-out; }
+        
+        /* CAMBIO: Se quita text-shadow y se aplica fuente Montserrat */
+        #countdown-container .time-block span:first-child {
+            font-family: var(--font-display);
+            font-weight: 900;
+        }
+        
+        /* CAMBIO: Se quita text-shadow */
+        #platform-active-text {
+            font-family: var(--font-display);
+            animation: reveal-text 1.5s ease-out forwards;
+        }
+        @keyframes reveal-text { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        #slider-container {
+            position: relative; width: 100%; height: 60px;
+            background-color: rgba(0, 0, 0, 0.25); border-radius: 9999px;
+            overflow: hidden; cursor: grab; -webkit-user-select: none; user-select: none;
+        }
+        #slider-container.grabbing { cursor: grabbing; }
+        #slider-handle {
+            position: absolute; top: 0; left: 0; width: 60px; height: 60px;
+            background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+            border-radius: 9999px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            animation: handle-pulse 2.5s infinite ease-in-out;
+        }
+        @keyframes handle-pulse { 0%, 100% { box-shadow: 0 0 20px 0 var(--color-glow); } 50% { box-shadow: 0 0 30px 5px var(--color-glow); } }
+        
+        #slider-text {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            color: rgba(255, 255, 255, 0.5); font-size: 0.875rem;
+            letter-spacing: 0.1em; animation: pulse-text 2.5s infinite ease-in-out;
+            transition: opacity 0.3s;
+        }
+        @keyframes pulse-text { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        
+        .modal-fade-in { animation: modalPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .modal-fade-out { animation: modalPopOut 0.3s ease-out forwards; }
+        @keyframes modalPopIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes modalPopOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.95); } }
+    </style>
+</head>
+<body>
+
+    <div id="background-wrapper"></div>
+
+    <section id="intro-sequence">
+        <div id="scene-1" class="intro-scene">
+            <svg class="w-16 h-16 mx-auto mb-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            <h1 class="text-4xl font-light tracking-widest">Studi.app | HomeLink</h1>
+            <p class="cinematic-text text-md mt-3 mb-8">Pre-Access by VitreumStudios</p>
+            <div id="loading-bar-container" class="w-72 h-3 glassmorphism p-0.5 mx-auto">
+                <div id="loading-bar" class="h-full bg-gradient-to-r from-purple-500 to-indigo-400 rounded-full" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div id="scene-2" class="intro-scene">
+            <p class="cinematic-text text-base font-light">VitreumStudios es propiedad intelectual de Eleanor "Ellie" Reyes</p>
+        </div>
+    </section>
+
+    <main id="main-content" class="min-h-screen flex items-center justify-center p-4">
+        <div class="glassmorphism p-8 md:p-10 text-center w-full max-w-2xl">
+            
+            <div id="status-container" class="mb-8">
+                <div id="countdown-container" class="flex justify-center space-x-4 md:space-x-8 text-center">
+                    <div class="time-block"><span id="days" class="block text-5xl md:text-7xl">00</span><span class="block text-xs text-gray-400">DÍAS</span></div>
+                    <div class="time-block"><span id="hours" class="block text-5xl md:text-7xl">00</span><span class="block text-xs text-gray-400">HORAS</span></div>
+                    <div class="time-block"><span id="minutes" class="block text-5xl md:text-7xl">00</span><span class="block text-xs text-gray-400">MINUTOS</span></div>
+                    <div class="time-block"><span id="seconds" class="block text-5xl md:text-7xl">00</span><span class="block text-xs text-gray-400">SEGUNDOS</span></div>
+                </div>
+                <h2 id="platform-active-text" class="text-4xl md:text-5xl font-bold opacity-0 hidden">Plataforma Activa</h2>
+            </div>
+
+            <div id="access-container" class="pt-8 border-t border-white/10">
+                <div id="slider-container">
+                    <div id="slider-handle" style="transition: left 0.3s ease-out;"><svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></div>
+                    <div id="slider-text">DESLIZAR PARA INGRESAR</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="modal-container" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-40 p-4" style="backdrop-filter: blur(8px);">
+        <div id="modal-content" class="glassmorphism p-8 w-full max-w-lg relative">
+             <button id="close-modal-btn" class="absolute top-4 right-4 text-white hover:text-gray-300 transition z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            <h2 id="modal-title" class="text-2xl font-bold mb-4"></h2>
+            <div id="modal-body" class="text-gray-200 space-y-4"></div>
+            <div class="mt-6 text-right"><button id="modal-action-btn" class="bg-[var(--color-secondary)] hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:scale-105 transition-transform duration-300">Siguiente</button></div>
+        </div>
+    </div>
+
+    <script>
+        // El JavaScript no necesita cambios para estas modificaciones de estilo.
+        // Se mantiene la misma funcionalidad.
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        const accessStartDate = new Date('2025-06-24T07:00:00');
+        const accessEndDate = new Date('2025-06-24T20:00:00');
+        const introSequence = document.getElementById('intro-sequence'), scene1 = document.getElementById('scene-1'), scene2 = document.getElementById('scene-2');
+        const mainContent = document.getElementById('main-content'), backgroundWrapper = document.getElementById('background-wrapper');
+        const countdownContainer = document.getElementById('countdown-container');
+        const platformActiveText = document.getElementById('platform-active-text');
+        const accessContainer = document.getElementById('access-container');
+        const sliderContainer = document.getElementById('slider-container'), sliderHandle = document.getElementById('slider-handle'), sliderText = document.getElementById('slider-text');
+        const loadingBar = document.getElementById('loading-bar');
+        async function playIntro() {
+            scene1.style.opacity = '1';
+            setTimeout(() => { loadingBar.style.animation = 'fillBar 3.5s ease-out forwards'; }, 500);
+            await sleep(4500);
+            scene1.style.opacity = '0';
+            await sleep(1500);
+            scene2.style.opacity = '1';
+            await sleep(3500);
+            scene2.style.opacity = '0';
+            await sleep(1000);
+            introSequence.style.opacity = '0';
+            backgroundWrapper.style.opacity = '1';
+            mainContent.style.opacity = '1';
+            setTimeout(() => introSequence.style.display = 'none', 1500);
+        }
+        window.addEventListener('load', playIntro);
+        function updateInterface() {
+            const now = new Date();
+            if (now >= accessStartDate) {
+                clearInterval(countdownInterval);
+                countdownContainer.classList.add('hidden');
+                platformActiveText.classList.remove('hidden');
+                return;
+            }
+            const diff = accessStartDate - now;
+            const d = Math.floor(diff/(1000*60*60*24)), h = Math.floor((diff%(1000*60*60*24))/(1000*60*60)), m = Math.floor((diff%(1000*60*60))/(1000*60)), s = Math.floor((diff%(1000*60))/1000);
+            document.getElementById('days').textContent = String(d).padStart(2,'0'); document.getElementById('hours').textContent = String(h).padStart(2,'0'); document.getElementById('minutes').textContent = String(m).padStart(2,'0'); document.getElementById('seconds').textContent = String(s).padStart(2,'0');
+        }
+        const countdownInterval = setInterval(updateInterface, 1000);
+        updateInterface();
+        let isDragging = false;
+        function startDrag(e) { isDragging = true; sliderContainer.classList.add('grabbing'); sliderText.style.opacity = '0'; sliderHandle.style.transition = 'none'; sliderHandle.style.animation = 'none'; }
+        function onDrag(e) {
+            if (!isDragging) return; e.preventDefault();
+            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            const rect = sliderContainer.getBoundingClientRect();
+            let newLeft = clientX - rect.left - (sliderHandle.offsetWidth / 2);
+            const maxLeft = sliderContainer.offsetWidth - sliderHandle.offsetWidth;
+            if (newLeft < 0) newLeft = 0; if (newLeft > maxLeft) newLeft = maxLeft;
+            sliderHandle.style.left = `${newLeft}px`;
+        }
+        function endDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            sliderContainer.classList.remove('grabbing');
+            sliderHandle.style.transition = 'left 0.3s ease-out';
+            const maxLeft = sliderContainer.offsetWidth - sliderHandle.offsetWidth;
+            const resetSlider = () => {
+                sliderHandle.style.left = '0px';
+                sliderText.style.opacity = '1';
+                sliderHandle.style.animation = '';
+            };
+            if (parseFloat(sliderHandle.style.left) >= maxLeft * 0.8) {
+                const now = new Date();
+                if (now < accessStartDate) {
+                    showModal('tooEarly');
+                    resetSlider();
+                } else if (now > accessEndDate) {
+                    showModal('tooLate');
+                    resetSlider();
+                } else {
+                    showModal(1);
+                    accessContainer.classList.add('hidden');
+                }
+            } else {
+                resetSlider();
+            }
+        }
+        sliderContainer.addEventListener('mousedown', startDrag); window.addEventListener('mousemove', onDrag); window.addEventListener('mouseup', endDrag);
+        sliderContainer.addEventListener('touchstart', startDrag, { passive: true }); window.addEventListener('touchmove', onDrag); window.addEventListener('touchend', endDrag);
+        const modalContainer = document.getElementById('modal-container'), modalContentEl = document.getElementById('modal-content'), modalTitle = document.getElementById('modal-title'), modalBody = document.getElementById('modal-body'), modalActionBtn = document.getElementById('modal-action-btn'), closeModalBtn = document.getElementById('close-modal-btn');
+        const appUrl = 'https://elliewasteland.github.io/studi.app_HogarConectado/';
+        let modalStep = 1;
+        const modalData = {
+            1: { title: 'Anuncios Importantes', body: `<p>¡Bienvenido/a al lanzamiento!</p><ul class="list-disc list-inside space-y-2 mt-2"><li>Esta aplicación ha sido diseñada para ser utilizada exclusivamente desde una <strong>computadora de escritorio o laptop</strong>.</li><li>El acceso estará habilitado desde las <strong>7:00 AM hasta las 8:00 PM del 24 de junio de 2025</strong>.</li><li class="pt-2 italic text-gray-400">Esta plataforma fue creada con cantidades industriales de café, galletas y una inmensa pasión por una educación verdaderamente innovadora y accesible.</li></ul>`, buttonText: 'Siguiente' },
+            2: { title: 'Guía de Acceso', body: `<p>Por favor, lee con atención para una experiencia fluida:</p><ul class="list-disc list-inside space-y-2 mt-2"><li>En la pantalla de sesión, ingresa tu <strong>código de estudiante</strong>. Si lo perdiste, contáctame por WhatsApp. Si no funciona, prueba cambiando la letra "i" por el número "1".</li><li>Al iniciar, la aplicación solicitará ocupar <strong>toda la pantalla</strong> para una inmersión total. Se cerrará automáticamente al finalizar.</li><li class="pt-2 font-bold text-yellow-300"><strong>¡MUY IMPORTANTE!</strong> Al finalizar la evaluación, asegúrate de <strong>COPIAR EL CÓDIGO DE SESIÓN</strong> que se te proporcionará. Es crucial para validar tu participación.</li><li>Si encuentras algún error o tienes alguna novedad, no dudes en escribirme. ¡Tu feedback es oro!</li></ul>`, buttonText: 'Entendido, ¡vamos allá!' },
+            'tooEarly': { title: 'Acceso Anticipado', body: `<p>El portal de evaluación aún no está abierto. El acceso estará disponible a partir de las <strong>7:00 AM</strong>.</p><p>Por favor, vuelve a intentarlo más tarde.</p>`, buttonText: 'Entendido' },
+            'tooLate': { title: 'Acceso Finalizado', body: `<p>La ventana para acceder a la evaluación ha finalizado a las <strong>8:00 PM</strong>.</p><p>Si crees que esto es un error, por favor, contacta con el administrador.</p>`, buttonText: 'Entendido' }
+        };
+        function showModal(step) {
+            const content = modalData[step];
+            modalStep = step;
+            modalTitle.textContent = content.title; modalBody.innerHTML = content.body;
+            modalActionBtn.textContent = content.buttonText || 'Siguiente';
+            modalContainer.classList.remove('hidden');
+            modalContentEl.classList.remove('modal-fade-out'); modalContentEl.classList.add('modal-fade-in');
+        }
+        function closeModal() {
+            modalContentEl.classList.remove('modal-fade-in'); modalContentEl.classList.add('modal-fade-out');
+            modalContentEl.addEventListener('animationend', () => {
+                modalContainer.classList.add('hidden');
+                if (accessContainer.classList.contains('hidden')) {
+                    accessContainer.classList.remove('hidden');
+                    sliderHandle.style.left = '0px';
+                    sliderText.style.opacity = '1';
+                    sliderHandle.style.animation = '';
+                }
+            }, { once: true });
+        }
+        closeModalBtn.addEventListener('click', closeModal);
+        modalActionBtn.addEventListener('click', () => {
+            if (modalStep === 1) { showModal(2); } 
+            else if (modalStep === 2) { window.open(appUrl, '_blank'); closeModal(); }
+            else { closeModal(); }
+        });
+        modalContainer.addEventListener('click', (e) => { if(e.target === modalContainer) closeModal(); });
+    </script>
+</body>
+</html>
