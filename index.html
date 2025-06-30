@@ -153,7 +153,7 @@
         // Se mantiene la misma funcionalidad.
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         const accessStartDate = new Date('2025-06-24T07:00:00');
-        const accessEndDate = new Date('2025-06-26T20:00:00');
+        const accessEndDate = new Date('2026-06-26T20:00:00');
         const introSequence = document.getElementById('intro-sequence'), scene1 = document.getElementById('scene-1'), scene2 = document.getElementById('scene-2');
         const mainContent = document.getElementById('main-content'), backgroundWrapper = document.getElementById('background-wrapper');
         const countdownContainer = document.getElementById('countdown-container');
@@ -232,10 +232,10 @@
         sliderContainer.addEventListener('mousedown', startDrag); window.addEventListener('mousemove', onDrag); window.addEventListener('mouseup', endDrag);
         sliderContainer.addEventListener('touchstart', startDrag, { passive: true }); window.addEventListener('touchmove', onDrag); window.addEventListener('touchend', endDrag);
         const modalContainer = document.getElementById('modal-container'), modalContentEl = document.getElementById('modal-content'), modalTitle = document.getElementById('modal-title'), modalBody = document.getElementById('modal-body'), modalActionBtn = document.getElementById('modal-action-btn'), closeModalBtn = document.getElementById('close-modal-btn');
-        const appUrl = 'https://elliewasteland.github.io/studi.app_HogarConectado/';
+        const appUrl = 'https://elliewasteland.github.io/Studi.app_EduGame_Pizza/';
         let modalStep = 1;
         const modalData = {
-            1: { title: 'Anuncios Importantes', body: `<p>¡Bienvenido/a al lanzamiento!</p><ul class="list-disc list-inside space-y-2 mt-2"><li>Esta aplicación ha sido diseñada para ser utilizada exclusivamente desde una <strong>computadora de escritorio o laptop</strong>.</li><li>El acceso estará habilitado desde las <strong>7:00 AM hasta las 8:00 PM del 24 de junio de 2025</strong>.</li><li class="pt-2 italic text-gray-400">Esta plataforma fue creada con cantidades industriales de café, galletas y una inmensa pasión por una educación verdaderamente innovadora y accesible.</li></ul>`, buttonText: 'Siguiente' },
+            1: { title: 'Anuncios Importantes', body: `<p>¡Bienvenido/a al lanzamiento!</p><ul class="list-disc list-inside space-y-2 mt-2"><li>Esta aplicación ha sido diseñada para ser utilizada exclusivamente desde una <strong>computadora de escritorio o laptop</strong>.</li><li>El acceso estará habilitado desde las <strong>7:00 AM hasta las 8:00 PM del 30 de junio de 2025</strong>.</li><li class="pt-2 italic text-gray-400">Esta plataforma fue creada con cantidades industriales de café, galletas y una inmensa pasión por una educación verdaderamente innovadora y accesible.</li></ul>`, buttonText: 'Siguiente' },
             2: { title: 'Guía de Acceso', body: `<p>Por favor, lee con atención para una experiencia fluida:</p><ul class="list-disc list-inside space-y-2 mt-2"><li>En la pantalla de sesión, ingresa tu <strong>código de estudiante</strong>. Si lo perdiste, contáctame por WhatsApp. Si no funciona, prueba cambiando la letra "i" por el número "1".</li><li>Al iniciar, la aplicación solicitará ocupar <strong>toda la pantalla</strong> para una inmersión total. Se cerrará automáticamente al finalizar.</li><li class="pt-2 font-bold text-yellow-300"><strong>¡MUY IMPORTANTE!</strong> Al finalizar la evaluación, asegúrate de <strong>COPIAR EL CÓDIGO DE SESIÓN</strong> que se te proporcionará. Es crucial para validar tu participación.</li><li>Si encuentras algún error o tienes alguna novedad, no dudes en escribirme. ¡Tu feedback es oro!</li></ul>`, buttonText: 'Entendido, ¡vamos allá!' },
             'tooEarly': { title: 'Acceso Anticipado', body: `<p>El portal de evaluación aún no está abierto. El acceso estará disponible a partir de las <strong>7:00 AM</strong>.</p><p>Por favor, vuelve a intentarlo más tarde.</p>`, buttonText: 'Entendido' },
             'tooLate': { title: 'Acceso Finalizado', body: `<p>La ventana para acceder a la evaluación ha finalizado a las <strong>8:00 PM</strong>.</p><p>Si crees que esto es un error, por favor, contacta con el administrador.</p>`, buttonText: 'Entendido' }
